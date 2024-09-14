@@ -1,0 +1,22 @@
+{
+    "name": "theokbokki/blade-sfc",
+    "description": "A laravel package that adds blade directives for writing css, scss, javascript and typescript directly in your blade views.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Theokbokki\\BladeSfc\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Théo Léonet",
+            "email": "hello@theoo.dev"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^8.2",
+        "illuminate/support": "^12.0@dev"
+    }
+}
