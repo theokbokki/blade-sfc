@@ -35,5 +35,19 @@ class BladeSfcServiceProvider extends ServiceProvider
                 \Theokbokki\BladeSfc\BladeSfc::handleCss(\$cssFilePath, \$cssContent);
             ?>";
         });
+
+        Blade::directive('js', function (string $filePath) {
+            return "<?php 
+                \$jsFilePath = \"".(isset($filePath) ? $filePath : null)."\";
+                ob_start(); 
+            ?>";
+        });
+
+        Blade::directive('endjs', function () {
+            return "<?php
+                \$jsContent = ob_get_clean();
+                \Theokbokki\BladeSfc\BladeSfc::handleJs(\$jsFilePath, \$jsContent);
+            ?>";
+        });
     }
 }
