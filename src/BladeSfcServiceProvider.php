@@ -14,7 +14,7 @@ class BladeSfcServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__.'/../config/blade-sfc.php' => config_path('blade-sfc.php'),
-        ]);
+        ], 'blade-sfc-config');
 
         if ($this->app->runningInConsole()) {
             $this->commands([
