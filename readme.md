@@ -128,7 +128,7 @@ The `<script>` tags are optional, you can add them for better syntax highlightin
 ### The `blade-sfc:compile` command
 
 The package also provides a useful `php artisan blade-sfc:compile` command to allow you to generate the `CSS` and `JS` files before building.
-It can also be helpful for debuging as it will throw and error if the blade files can't compile.
+It can also be helpful for debuging as it will throw an error if the blade files can't compile.
 
 ```shell
 php artisan blade-sfc:compile
