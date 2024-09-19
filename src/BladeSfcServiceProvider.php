@@ -12,9 +12,7 @@ class BladeSfcServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->publishes([
-            __DIR__.'/../config/blade-sfc.php' => config_path('blade-sfc.php'),
-        ], 'blade-sfc-config');
+        $this->mergeConfigFrom(__DIR__.'/../config/blade-sfc.php', 'blade-sfc-config');
 
         if ($this->app->runningInConsole()) {
             $this->commands([
