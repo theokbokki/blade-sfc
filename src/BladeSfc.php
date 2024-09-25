@@ -33,14 +33,27 @@ class BladeSfc
         if (!app()->has($filetype.'_written_files')) {
             app()->instance($filetype.'_written_files', []);
         }
+        if (!app()->has($filetype.'_written_content')) {
+            app()->instance($filetype.'_written_content', []);
+        }
 
         $writtenFiles = app($filetype.'_written_files');
+        $writtenContent = app($filetype.'_written_content');
+
         if (!in_array($outputPath, $writtenFiles)) {
             File::put($outputPath, '');
             $writtenFiles[] = $outputPath;
             app()->instance($filetype.'_written_files', $writtenFiles);
         }
-        
-        File::append($outputPath, $content);
+
+        if (!isset($writtenContent[$outputPath])) {
+            $writtenContent[$outputPath] = [];
+        }
+
+        if (!in_array($content, $writtenContent[$outputPath])) {
+            File::append($outputPath, $content);
+            $writtenContent[$outputPath][] = $content;
+            app()->instance($filetype.'_written_content', $writtenContent);
+        }
     }
 }
