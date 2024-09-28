@@ -25,7 +25,7 @@ And that's why I created blade directives to use [Blade components](https://lara
 <script>
     document.querySelector(".my-component").innerText = "Maybe star this repo ?"  
 </script>
-@endjs
+@endjavascript
 
 <div class="my-component"></div>
 
@@ -60,7 +60,7 @@ And you could also use `SCSS` or `Typescript`
     starRepo = true;
     console.log(starRepo);
 </script>
-@endjs
+@endjavascript
 @css('resources/css/my-file.scss')
 <style>
     $color: red;
@@ -112,14 +112,14 @@ The `<style>` tags are optional, you can add them for better syntax highlighting
 
 ### JS rules
 
-The `@javascript()...@endjs` rules work as follow:
+The `@javascript()...@endjavascript` rules work as follow:
 
 ```blade
 @javascript('optional/pathname.js')
 <script>
     // Your JS
 </script>
-@endjs
+@endjavascript
 ```
 
 If no pathname is provided, the code will be added to a `/resources/js/generated.js` file that you can then import in your main `JS` entry point.
