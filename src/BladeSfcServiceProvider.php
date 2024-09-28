@@ -34,14 +34,14 @@ class BladeSfcServiceProvider extends ServiceProvider
             ?>";
         });
 
-        Blade::directive('js', function (string $filePath) {
+        Blade::directive('javascript', function (string $filePath) {
             return "<?php 
                 \$jsFilePath = \"".(isset($filePath) ? $filePath : null)."\";
                 ob_start(); 
             ?>";
         });
 
-        Blade::directive('endjs', function () {
+        Blade::directive('endjavascript', function () {
             return "<?php
                 \$jsContent = ob_get_clean();
                 \Theokbokki\BladeSfc\BladeSfc::handleJs(\$jsFilePath, \$jsContent);

@@ -21,7 +21,7 @@ But I hate using javascript for dealing with backend stuff so I use [Laravel](ht
 And that's why I created blade directives to use [Blade components](https://laravel.com/docs/11.x/blade#main-content) like you would Svelte or Vue ones. (You can read more about it [here](https://theoo.dev/en/articles/blade-sfc))
 
 ```blade
-@js()
+@javascript()
 <script>
     document.querySelector(".my-component").innerText = "Maybe star this repo ?"  
 </script>
@@ -53,7 +53,7 @@ One of the great benefits of this approach is that you can use `PHP` inside your
 And you could also use `SCSS` or `Typescript`
 
 ```blade
-@js('resources/js/my-file.ts')
+@javascript('resources/js/my-file.ts')
 <script>
     let starRepo: boolean;
     
@@ -112,10 +112,10 @@ The `<style>` tags are optional, you can add them for better syntax highlighting
 
 ### JS rules
 
-The `@js()...@endjs` rules work as follow:
+The `@javascript()...@endjs` rules work as follow:
 
 ```blade
-@js('optional/pathname.js')
+@javascript('optional/pathname.js')
 <script>
     // Your JS
 </script>
