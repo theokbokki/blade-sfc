@@ -22,6 +22,9 @@ class BladeSfc
     }
 
     private static function handle(string $filetype, string $filePath, string $content) {
+        if (! app()->has('blade-sfc-compiling')) {
+            return;
+        }
         if (empty($filePath)) {
             $filePath = config('blade-sfc.default_'.$filetype.'_output');
         }

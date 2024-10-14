@@ -38,22 +38,10 @@ And that's why I created blade directives to use [Blade components](https://lara
 @endcss
 ```
 
-One of the great benefits of this approach is that you can use `PHP` inside your `JS` or `CSS` like so:
-
-```blade
-@css()
-<style>
-    .profile-picture {
-        background-image: url({{ storage_path($user->profile_picture) }});
-    }
-</style>
-@endcss
-```
-
 And you could also use `SCSS` or `Typescript`
 
 ```blade
-@javascript('resources/js/my-file.ts')
+@javascript('/js/my-file.ts')
 <script>
     let starRepo: boolean;
     
@@ -61,7 +49,7 @@ And you could also use `SCSS` or `Typescript`
     console.log(starRepo);
 </script>
 @endjavascript
-@css('resources/css/my-file.scss')
+@css('/css/my-file.scss')
 <style>
     $color: red;
     .profile-picture {
@@ -99,40 +87,72 @@ return [
 The `@css()...@endcss` rules work as follow:
 
 ```blade
-@css('optional/pathname.css')
+@css('/optional/pathname.css')
 <style>
     // Your CSS
 </style>
 @endcss
 ```
 
-If no pathname is provided, the code will be added to a `/resources/css/generated.css` file that you can then import in your main `CSS` entry point.
-The `<style>` tags are optional, you can add them for better syntax highlighting.
+If a pathname is provided, the code will try to find or create the file in the `resource_path()` directory.
 
+If no pathname is provided, the code will be added to the file defined in the config (`/resources/css/generated.css` by default). 
+You can then import it in your main `CSS` entry point.
+
+The `<style>` tags are optional, you can add them for better syntax highlighting.
 
 ### JS rules
 
 The `@javascript()...@endjavascript` rules work as follow:
 
 ```blade
-@javascript('optional/pathname.js')
+@javascript('/optional/pathname.js')
 <script>
     // Your JS
 </script>
 @endjavascript
 ```
 
-If no pathname is provided, the code will be added to a `/resources/js/generated.js` file that you can then import in your main `JS` entry point.
+If a pathname is provided, the code will try to find or create the file in the `resource_path()` directory.
+
+If no pathname is provided, the code will be added to the file defined in the config (`/resources/js/generated.js` by default). 
+You can then import it in your main `JS` entry point.
+
 The `<script>` tags are optional, you can add them for better syntax highlighting.
 
 ### The `blade-sfc:compile` command
 
-The package also provides a useful `php artisan blade-sfc:compile` command to allow you to generate the `CSS` and `JS` files before building.
-It can also be helpful for debuging as it will throw an error if the blade files can't compile.
+This command is used to parse the blade files and put the JS and CSS content into the correct files.
+It's used like so:
 
 ```shell
 php artisan blade-sfc:compile
 npm run build
+```
+
+If you want to avoid running it manually, you can use [vite-plugin-run](https://github.com/innocenzi/vite-plugin-run/tree/main).
+Here's how to modify your vite config:
+
+```js
+import { defineConfig } from 'vite';
+import laravel from 'laravel-vite-plugin';
+import { run } from 'vite-plugin-run'
+
+export default defineConfig({
+    plugins: [
+        laravel({
+            input: ['resources/css/app.css', 'resources/js/app.js'], // Or whatever your CSS and JS files are
+            refresh: true,
+        }),
+        run([
+            {
+ ,              name: 'compile views',
+                run: ['php', 'artisan', 'blade-sfc:compile'],
+                condition: (file) => file.includes('.blade.php'),
+            },
+        ]),
+    ]
+});
 ```
 
 ## Configuration
@@ -147,4 +167,4 @@ The configuration file allows you to choose where you want to output your `JS` a
 
 ## Future improvements
 
-- [ ] Put all JS and CSS in files at once to avoid multiple reloads.
+- [ ] Allow for blade statements to be used inside JS and CSS. (Is currently a problem because of unknown variables at render time).
